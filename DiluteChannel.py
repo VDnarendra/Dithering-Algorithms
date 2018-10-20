@@ -100,22 +100,23 @@ class DiluteChannel():
             ]
         DEN = np.sum(np.sum(mat))
         [
-            [self.p,self.q,self.r,self.A,self.B],
+            [_     ,_     ,_     ,self.A,self.B],
             [self.C,self.D,self.E,self.F,self.G],
             [self.H,self.I,self.J,self.K,self.L],
         ] = mat/DEN
-        print(DEN)
-        print(self.A)
-        print(self.B)
             
     def dilute(self , img,factor=1,reshape=True):
         
+        # Check if the image is with 2 channels or 3 channels
         if len(img.shape)!=2:
-            print(img.shape)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+        # You can remove this if you want to work with full image[But takes more time]
         if reshape:
             pixelWIDTH = 384
             img = cv2.resize(img, (0,0), fx=pixelWIDTH/(img.shape[1]), fy=pixelWIDTH/(img.shape[1])) 
+        
+
         img = np.array(img,dtype='int')
         h,w = img.shape
         
@@ -164,6 +165,7 @@ class DiluteChannel():
                 if self.L !=0.0:
                     img[y + 2][x + 2] +=( quant_error * self.L)
         img = np.array(img,dtype='uint8')
+        # use this line if FACTOR==1, otherwise reomve it
         ret,img = cv2.threshold(img  ,110,1,cv2.THRESH_BINARY)
         return img
         
