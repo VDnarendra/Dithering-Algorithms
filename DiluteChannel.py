@@ -110,6 +110,7 @@ class DiluteChannel():
         return img
 
     def dilute_on_3channel(self , img,factor=1,reshape=True):
+        # Check if the image is with 2 channels or 3 channels
         if len(img.shape)!=3:
             return self.dilute(img, factor, reshape)
 
@@ -128,7 +129,14 @@ if __name__ == '__main__':
 
     converter = DiluteChannel(DiluteChannel.d[3])
 
-    con = converter.dilute(img,1)
+
+    # The second argument 'factor' is for number of Levels in outPut image
+    # for example factor = 1 implies ---- 2 levels in outPut image (for single channel image)
+    #             factor = 2 implies ---- 3 levels in outPut image (for single channel image)
+    # for example factor = 1 implies ---- 3^2 = 8  levels in outPut image (for 3 channel image)
+    #             factor = 2 implies ---- 3^3 = 27  levels in outPut image (for 3 channel image)
+
+    con = converter.dilute(img,255)
     plt.imshow(con,cmap='gray')
     plt.show()
     con_3 = converter.dilute_on_3channel(img,1)
