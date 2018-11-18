@@ -111,7 +111,7 @@ class DiluteChannel():
 
     def dilute_on_3channel(self , img,factor=1,reshape=True):
         if len(img.shape)!=3:
-            return img
+            return self.dilute(img, factor, reshape)
 
         if reshape:
             pixelWIDTH = 384
